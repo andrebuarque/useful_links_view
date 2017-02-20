@@ -16,17 +16,17 @@ class Sidebar extends Component {
               <ul className="nav" id="side-menu">
                   <li>
                       <Link to="/" onClick={this.clickMenu}>
-                        <i className="fa fa-dashboard fa-fw"></i> Links
+                        <i className="fa fa-link fa-fw"></i> Links
                       </Link>
                   </li>
                   <li>
                       <Link to="/tags">
-                        <i className="fa fa-dashboard fa-fw"></i> Tags
+                        <i className="fa fa-tag fa-fw"></i> Tags
                       </Link>
                   </li>
                   <li>
                       <Link to="/categories">
-                        <i className="fa fa-dashboard fa-fw"></i> Categories
+                        <i className="fa fa-list fa-fw"></i> Categorias
                       </Link>
                   </li>
               </ul>

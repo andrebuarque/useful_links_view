@@ -14,12 +14,10 @@ class Categories extends Component {
 	  	rows: [],
 	  	rowsSelected: [],
 	  	btnEditDisabled: true,
-	  	btnDeleteDisabled: true,
 	  };
 
 	  this.requestCategories();
 	  this.onSelectRow = this.onSelectRow.bind(this);
-	  this.handleClickEdit = this.handleClickEdit.bind(this);
 	  this.handleDelete = this.handleDelete.bind(this);
 	}
 
@@ -45,12 +43,7 @@ class Categories extends Component {
 		this.setState({ 
 			rowsSelected: rowsSelected,
 			btnEditDisabled: rowsSelected.length !== 1,
-			btnDeleteDisabled: rowsSelected.length === 0
 		});
-	}
-
-	handleClickEdit() {
-		console.log(this.state.rowsSelected);
 	}
 
 	handleDelete(rows) {
