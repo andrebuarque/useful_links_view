@@ -5,6 +5,8 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import App from './App';
 
 import Links from './components/Links';
+import LinksNew from './components/LinksNew';
+import LinksEdit from './components/LinksEdit';
 
 import Tags from './components/Tags';
 import TagsNew from './components/TagsNew';
@@ -19,6 +21,9 @@ ReactDOM.render(
     <Route component={App} path="/">
       <IndexRoute component={Links} />
       <Route path="tags" component={Tags}/>
+      <Route path="links" component={Links}/>
+      <Route path="links/new" component={LinksNew}/>
+      <Route path="links/edit" component={LinksEdit}/>
       <Route path="tags/new" component={TagsNew}/>
       <Route path="tags/edit" component={TagsEdit}/>
       <Route path="categories" component={Categories} />
