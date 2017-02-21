@@ -18,7 +18,7 @@ class Links extends Component {
 
 	  this.requestLinks();
 	  this.onSelectRow = this.onSelectRow.bind(this);
-	  // this.handleDelete = this.handleDelete.bind(this);
+	  this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	requestLinks() {
@@ -44,6 +44,18 @@ class Links extends Component {
 		this.setState({ 
 			rowsSelected: rowsSelected,
 			btnEditDisabled: rowsSelected.length !== 1,
+		});
+	}
+
+	handleDelete(rows) {
+		rows.forEach((id) => {
+			LinkService.delete(id).then(
+		  	(response) => {
+		  		
+		  	}, (err) => {
+		  		alert(`Ocorreu um erro ao remover o(s) registro(s): ${err.message}`);
+		  	}
+		  );
 		});
 	}
 
@@ -82,16 +94,18 @@ class Links extends Component {
 	        		search 
 	        		deleteRow
 	        		selectRow={{ mode: 'checkbox', onSelect: this.onSelectRow} }>
+	        		<TableHeaderColumn 
+				      	dataField='id' 
+				      	hidden
+				      	isKey>ID</TableHeaderColumn>
 				      <TableHeaderColumn 
 				      	dataField='title' 
-				      	isKey
 				      	dataFormat={(cell, row, extra) => {
 				      		return <a href={row.url} target="_blank">{row.title}</a>;
 				      	}}>Título</TableHeaderColumn>
 				      <TableHeaderColumn 
 				      	dataField='category.name' 
-				      	formatExtraData='category.name'
-				      	dataFormat={(cell, row, extra) => eval(`row.${extra}`)}>Categoria</TableHeaderColumn>
+				      	dataFormat={(cell, row, extra) => row.category.name}>Categoria</TableHeaderColumn>
 				      <TableHeaderColumn 
 				      	dataField='tags'
 				      	dataFormat={(cell, row, extra) => {
