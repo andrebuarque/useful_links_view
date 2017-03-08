@@ -4,6 +4,7 @@
   "homepage": "https://andrebuarque.github.io/useful_links_view",
   "private": true,
   "devDependencies": {
+    "gh-pages": "^0.12.0",
     "gulp-concat": "^2.6.1",
     "gulp-remove-empty-lines": "0.0.8",
     "gulp-strip-comments": "^2.4.4",
