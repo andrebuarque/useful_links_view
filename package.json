@@ -1,6 +1,7 @@
 {
   "name": "useful_links_view",
   "version": "0.1.0",
+  "homepage": "https://andrebuarque.github.io/useful_links_view",
   "private": true,
   "devDependencies": {
     "gulp-concat": "^2.6.1",
