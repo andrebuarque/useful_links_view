@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router'; 
+import { Router, Route, hashHistory, IndexRoute } from 'react-router'; 
 
 import App from './App';
 
@@ -17,7 +17,7 @@ import CategoriesNew from './components/CategoriesNew';
 import CategoriesEdit from './components/CategoriesEdit';
 
 ReactDOM.render(
-	<Router history={browserHistory}>
+	<Router history={hashHistory}>
     <Route component={App} path="/">
       <IndexRoute component={Links} />
       <Route path="tags" component={Tags}/>
