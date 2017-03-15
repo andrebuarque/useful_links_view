@@ -19,7 +19,8 @@ class LinksEdit extends Component {
 	  	titleValue: title,
 	  	urlValue: url,
 	  	categoryValue: category,
-	  	tagsValue: tags
+	  	tagsValue: tags,
+	  	loading: false
 	  };
 
 		this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -27,6 +28,7 @@ class LinksEdit extends Component {
 		this.onChangeCategory = this.onChangeCategory.bind(this);
 		this.onChangeTag = this.onChangeTag.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
+	  this.doLoading = this.doLoading.bind(this);
 	}
 
 	onChangeTitle(e) {
@@ -45,6 +47,10 @@ class LinksEdit extends Component {
     this.setState({ tagsValue: val });
   }
 
+  doLoading(value) {
+  	this.setState({ loading: value });
+  }
+
 	handleSubmit(e) {
 		e.preventDefault();
 
@@ -61,21 +67,24 @@ class LinksEdit extends Component {
 		link.category_id = category.id;
 		link.tags = tags.map((item) => item.id);
 
+		this.doLoading(true);
+
 		LinkService.update(link).then(
 			(reponse) => {
 				this.props.router.push('/links');
 			}, (err) => {
+				this.doLoading(false);
 				alert(`Ocorreu um erro: ${err.message}`);
 			}
 		);
 	}
 
 	render() {
-		const { titleValue, categoryValue, tagsValue, urlValue } = this.state;
+		const { titleValue, categoryValue, tagsValue, urlValue, loading } = this.state;
 
 		return (
 			<div>
-				<HeaderPage name="Editar link" />
+				<HeaderPage name="Editar link" loading={loading} />
 
 				<LinksForm 
 					options={
@@ -88,7 +97,8 @@ class LinksEdit extends Component {
 							titleValue: titleValue,
 							urlValue: urlValue,
 							categoryValue: categoryValue,
-							tagsValue: tagsValue
+							tagsValue: tagsValue,
+							doLoading: this.doLoading
 						}
 					}
 					/>

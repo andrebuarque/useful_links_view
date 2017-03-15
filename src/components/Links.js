@@ -14,19 +14,25 @@ class Links extends Component {
 	  	rows: [],
 	  	rowsSelected: [],
 	  	btnEditDisabled: true,
+	  	loading: false
 	  };
 
-	  this.requestLinks();
 	  this.onSelectRow = this.onSelectRow.bind(this);
 	  this.handleDelete = this.handleDelete.bind(this);
 	}
 
+	componentDidMount() {
+		this.requestLinks();	
+	}
+
 	requestLinks() {
+		this.setState({ loading: true });
+
 		LinkService.all().then(
 	  	(response) => {
-	  		console.log(response.data);
-	  		this.setState({rows: response.data});
+	  		this.setState({ rows: response.data, loading: false });
 	  	}, (err) => {
+	  		this.setState({ loading: false });
 	  		alert(`Ocorreu um erro: ${err.message}`);
 	  	}
 	  );
@@ -62,7 +68,7 @@ class Links extends Component {
 	render() {
 		return (
 			<div>
-				<HeaderPage name="Links" />
+				<HeaderPage name="Links" loading={this.state.loading} />
 
 	    	<div className="row">
 	    		<div className="col-lg-12" style={{ margin: '0 2px 12px 0' }}>
@@ -79,7 +85,6 @@ class Links extends Component {
 	    						style={{ marginRight: '5px' }}>
 	    				<i className="fa fa-edit"></i> Editar
 	    			</Link>
-
 	    		</div>
 	    	</div>
 

@@ -12,7 +12,8 @@ class CategoriesNew extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	nameValue: ''
+	  	nameValue: '',
+	  	loading: false
 	  };
 
 		this.handleChange = this.handleChange.bind(this);
@@ -25,24 +26,30 @@ class CategoriesNew extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
+
+		this.setState({ loading: true });
+
 		CategoryService.new({ name: this.state.nameValue.trim() }).then(
 			(reponse) => {
 				this.props.router.push('/categories');
 			}, (err) => {
+				this.setState({ loading: false });
 				alert(`Ocorreu um erro: ${err.message}`);
 			}
 		);
 	}
 
 	render() {
+		const { nameValue, loading } = this.state;
+		
 		return (
 			<div>
-				<HeaderPage name="Nova categoria" />
+				<HeaderPage name="Nova categoria" loading={loading} />
 
 				<CategoriesForm 
 					handleSubmit={this.handleSubmit}
 					handleChangeName={this.handleChange}
-					nameValue={this.state.nameValue}
+					nameValue={nameValue}
 					/>
       </div>
 		);

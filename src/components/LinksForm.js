@@ -16,25 +16,36 @@ class LinksForm extends Component {
       optionsCategory: [],
       optionsTag: []
     };
-
-    this.findCategories();
-    this.findTags();
   }
 
-  findCategories() {
+  componentDidMount() {
+    const loading = this.props.options.doLoading;
+    this.findCategories(loading);
+    this.findTags(loading);
+  }
+
+  findCategories(loading) {
+    loading(true);
+
     CategoryService.all().then(
     (response) => {
+      loading(false);
       this.setState({ optionsCategory: response.data });
     }, (err) => {
+      loading(false);
       alert(`Ocorreu um erro ao buscar as categorias: ${err.message}`)
     });
   }
 
-  findTags() {
+  findTags(loading) {
+    loading(true);
+
     TagService.all().then(
     (response) => {
+      loading(false);
       this.setState({ optionsTag: response.data });
     }, (err) => {
+      loading(false);
       alert(`Ocorreu um erro ao buscar as categorias: ${err.message}`)
     });
   }

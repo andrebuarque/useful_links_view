@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const URL_BASE = 'https://links-api.herokuapp.com/tags';
+// const URL_BASE = 'http://localhost:3000/tags';
 const BASIC_AUTH = {
 	username: 'name',
 	password: 'password'

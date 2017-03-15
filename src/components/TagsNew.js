@@ -12,7 +12,8 @@ class CategoriesEdit extends Component {
 	  super(props);
 
 	  this.state = {
-	  	nameValue: ''
+	  	nameValue: '',
+	  	loading: false
 	  };
 
 		this.handleChange = this.handleChange.bind(this);
@@ -25,25 +26,30 @@ class CategoriesEdit extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
+
+		this.setState({ loading: true });
 		
 		TagService.new({ name: this.state.nameValue.trim() }).then(
 			(reponse) => {
 				this.props.router.push('/tags');
 			}, (err) => {
+				this.setState({ loading: false });
 				alert(`Ocorreu um erro: ${err.message}`);
 			}
 		);
 	}
 
 	render() {
+		const { nameValue, loading } = this.state;
+
 		return (
 			<div>
-				<HeaderPage name="Nova tag" />
+				<HeaderPage name="Nova tag" loading={loading} />
 
 				<TagsForm 
 					handleSubmit={this.handleSubmit}
 					handleChangeName={this.handleChange}
-					nameValue={this.state.nameValue}
+					nameValue={nameValue}
 					/>
       </div>
 		);

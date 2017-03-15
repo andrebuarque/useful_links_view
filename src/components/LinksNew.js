@@ -15,7 +15,8 @@ class LinksNew extends Component {
 	  	titleValue: '',
 	  	urlValue: '',
 	  	categoryValue: null,
-	  	tagsValue: []
+	  	tagsValue: [],
+	  	loading: false
 	  };
 
 		this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -23,6 +24,7 @@ class LinksNew extends Component {
 		this.onChangeCategory = this.onChangeCategory.bind(this);
 		this.onChangeTag = this.onChangeTag.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
+	  this.doLoading = this.doLoading.bind(this);
 	}
 
 	onChangeTitle(e) {
@@ -41,6 +43,10 @@ class LinksNew extends Component {
     this.setState({ tagsValue: val });
   }
 
+  doLoading(value) {
+  	this.setState({ loading: value });
+  }
+
 	handleSubmit(e) {
 		e.preventDefault();
 
@@ -50,6 +56,8 @@ class LinksNew extends Component {
 			categoryValue: category, 
 			tagsValue: tags
 		} = this.state;
+
+		this.doLoading(true);
 		
 		LinkService.new({ 
 			title: title.trim(),
@@ -60,17 +68,18 @@ class LinksNew extends Component {
 			(reponse) => {
 				this.props.router.push('/links');
 			}, (err) => {
+				this.doLoading(false);
 				alert(`Ocorreu um erro: ${err.message}`);
 			}
 		);
 	}
 
 	render() {
-		const { titleValue, categoryValue, tagsValue, urlValue } = this.state;
+		const { titleValue, categoryValue, tagsValue, urlValue, loading } = this.state;
 
 		return (
 			<div>
-				<HeaderPage name="Novo link" />
+				<HeaderPage name="Novo link" loading={loading} />
 
 				<LinksForm 
 					options={
@@ -83,7 +92,8 @@ class LinksNew extends Component {
 							titleValue: titleValue,
 							urlValue: urlValue,
 							categoryValue: categoryValue,
-							tagsValue: tagsValue
+							tagsValue: tagsValue,
+							doLoading: this.doLoading
 						}
 					}
 					/>

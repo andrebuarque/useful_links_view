@@ -14,18 +14,24 @@ class Tags extends Component {
 	  	rows: [],
 	  	rowsSelected: [],
 	  	btnEditDisabled: true,
+	  	loading: false
 	  };
 
-	  this.requestTags();
 	  this.onSelectRow = this.onSelectRow.bind(this);
 	  this.handleDelete = this.handleDelete.bind(this);
 	}
 
+	componentDidMount() {
+		this.requestTags();
+	}
+
 	requestTags() {
+		this.setState({ loading: true });
 		TagService.all().then(
 	  	(response) => {
-	  		this.setState({rows: response.data});
+	  		this.setState({ rows: response.data, loading: false });
 	  	}, (err) => {
+	  		this.setState({ loading: false });
 	  		alert(`Ocorreu um erro: ${err.message}`);
 	  	}
 	  );
@@ -59,9 +65,11 @@ class Tags extends Component {
 	}
 
 	render() {
+		const { loading, rowsSelected, btnEditDisabled, rows } = this.state;
+
 		return (
 			<div>
-				<HeaderPage name="Tags" />
+				<HeaderPage name="Tags" loading={loading} />
 
 	    	<div className="row">
 	    		<div className="col-lg-12" style={{ margin: '0 2px 12px 0' }}>
@@ -72,9 +80,9 @@ class Tags extends Component {
 	    				<i className="fa fa-plus"></i> Novo registro
 	    			</Link>
 
-	    			<Link to={{ pathname: '/tags/edit', state: { registry: this.state.rowsSelected[0] } }}
+	    			<Link to={{ pathname: '/tags/edit', state: { registry: rowsSelected[0] } }}
 	    						className="btn btn-info" 
-	    						disabled={this.state.btnEditDisabled} 
+	    						disabled={btnEditDisabled} 
 	    						style={{ marginRight: '5px' }}>
 	    				<i className="fa fa-edit"></i> Editar
 	    			</Link>
@@ -85,7 +93,7 @@ class Tags extends Component {
 	    	<div className="row">
 	        <div className="col-lg-12">
 	        	<BootstrapTable 
-	        		data={this.state.rows} 
+	        		data={rows} 
 	        		options={{ onDeleteRow: this.handleDelete, deleteText: 'Remover' }}
 	        		striped 
 	        		hover 
